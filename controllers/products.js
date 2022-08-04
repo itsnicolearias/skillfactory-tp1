@@ -12,10 +12,10 @@ const getAllProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
     try {
-        const { id } = req.params
-        const product = await Product.getById(req.params.id)
+        const  id = req.params.id
+        const product = await Product.getById(id)
         if (!product){
-            throw new ErrorObject('Product not found', 404)
+            res.json('Error: Product not found')
         }
         res.json(product)
     } catch (error) {
@@ -34,9 +34,12 @@ const getAllCategories = async (req, res) => {
 
 const getCategoryByName = async (req, res) => {
     try {
-        const name = req.params
+        const name = req.params.name
         const category = await Product.getByCategory(name)
-         return res.json(category)
+        if (!category){
+            res.json('Error: Category not found')
+        }
+        return res.json(category)
        
     } catch (error) {
         throw new ErrorObject(error.message, error.statusCode || 500)
@@ -47,7 +50,13 @@ const getByPrices = async (req, res) => {
     ///prices debe devolver una lista de productos que tengan id, titulo y precio 
     //de cada producto y que se pueda ordenar por precio 
     //y se pueda elegir si en orden ascendiente o descendiente a traves de un query “order”
-
+    try {
+        const order = req.query.order
+        const products = await Product.getByPrices(order)
+        res.json(products)
+    } catch (error) {
+        throw new ErrorObject(error.message, error.statusCode || 500)
+    }
 }
 
 const getExpensiveProducts = async (req, res) => {

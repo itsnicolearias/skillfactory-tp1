@@ -6,13 +6,19 @@ let getAll = () => {
 }
 
 const getById = async (id) => {
-    return  await fetch(`https://fakestoreapi.com/users/`+ id)
+    return  await fetch(`https://fakestoreapi.com/users/${id}`)
     .then(res=>res.json())
+}
+
+const firstThree = async () => {
+    return await fetch('https://fakestoreapi.com/users?limit=3')
+            .then(res=>res.json())
 }
 
 let User = {
     getAll,
-    getById
+    getById,
+    firstThree
 }
 
 module.exports = User

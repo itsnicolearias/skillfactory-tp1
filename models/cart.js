@@ -5,13 +5,13 @@ let getAll = () => {
     .then(res=>res.json())
 }
 
-let getById = (id) => {
-    return fetch(`https://fakestoreapi.com/carts/${id}`)
+let getById = async (id) => {
+    return await fetch(`https://fakestoreapi.com/carts/${id}`)
     .then(res=>res.json())
 }
 
-let getUserCarts = (userId) => {
-    return fetch(`https://fakestoreapi.com/carts/user/${userId}`)
+let getUserCarts = async (userId) => {
+    return await fetch(`https://fakestoreapi.com/carts/user/${userId}`)
     .then(res=>res.json())
 }
 

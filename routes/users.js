@@ -4,7 +4,7 @@ const { getAllUsers, getUserById, getFirstUsers } = require('../controllers/user
 const router = Router()
 
 router.get('/', getAllUsers)
+router.get('/firsts', getFirstUsers)
 router.get('/:id', getUserById)
-router.get('/first', getFirstUsers)
 
 module.exports = router;

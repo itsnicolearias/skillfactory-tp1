@@ -4,18 +4,36 @@ const Cart = require('../models/cart')
 const getAllCarts = async (req, res) => {
     try {
         const carts = await Cart.getAll()
-        res.status(200).json(carts)
+        res.json(carts)
     } catch (error) {
         throw new ErrorObject(error.message, error.statusCode || 500)
     }
 }
 
 const getCartById = async (req, res) => {
-
+    try {
+        const id = req.params.id
+        const cart = await Cart.getById(id)
+        if (!cart){
+            res.json('Error: Cart not found')
+        }
+        res.json(cart)
+    } catch (error) {
+        throw new ErrorObject(error.message, error.statusCode || 500)
+    }
 }
 
 const getUserCart = async (req, res) => {
-
+    try {
+        const userId = req.params.userId
+        const carts = await Cart.getUserCarts(userId)
+        if (!carts){
+            res.json('Error: Invalid user')
+        }
+        res.json(carts)
+    } catch (error) {
+        throw new ErrorObject(error.message, error.statusCode || 500)
+    }
 }
 
 const getBigCarts = async (req, res) => {

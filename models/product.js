@@ -6,7 +6,7 @@ let getAll = () => {
     
 }
 
-let getById = () => {
+let getById = (id) => {
     return fetch(`https://fakestoreapi.com/products/${id}`)
             .then(res => res.json())
 }
@@ -17,15 +17,30 @@ let getCategories = () => {
 }
 
 async function getByCategory(name) {
-    const res = await fetch(`https://fakestoreapi.com/products/category/` + name)
-    return await res.json()
+    return fetch(`https://fakestoreapi.com/products/category/${name}`)
+            .then(res => res.json())
 }
 
+async function getByPrices(order) {
+    const products = await getAll()
+    const orderProducts = products.map(p => ({
+            id: p.id,
+            title: p.title,
+            price: p.price
+       }))
+    if (order === 'ASC'){
+        return orderProducts.sort((a,b) => a.price - b.price)
+    } else if (order === 'DESC'){
+        return orderProducts.sort((a,b) => b.price - a.price)
+    } return orderProducts;
+    
+}
 let Product = {
     getAll,
     getById,
     getCategories,
-    getByCategory
+    getByCategory,
+    getByPrices
 }
 
 module.exports = Product
