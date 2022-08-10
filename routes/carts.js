@@ -4,9 +4,10 @@ const { getAllCarts, getBigCarts, getCartById, getUserCart } = require('../contr
 const router = Router()
 
 router.get('/', getAllCarts)
+router.get('/bigcarts', getBigCarts)
 router.get('/user/:id', getUserCart)
 router.get('/:id', getCartById)
 
-router.get('/bigcarts', getBigCarts)
+
 
 module.exports = router;

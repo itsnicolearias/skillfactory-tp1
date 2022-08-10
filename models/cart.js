@@ -1,3 +1,6 @@
+const { response } = require('express')
+const User = require('./user')
+
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
 
 let getAll = () => {
@@ -15,10 +18,39 @@ let getUserCarts = async (userId) => {
     .then(res=>res.json())
 }
 
+let bigCarts = async () => {
+    const carts = await getAll()
+    const users = await User.getAll()
+    const carrito =  await carts.filter((cart) => cart.products.length > 1)
+        /*if {
+       const usuarios = users.filter((user) => {
+          if (user.id === cart.userId){
+            const response = {
+              name: user.name,
+              carts: JSON.stringify(cart)
+            }
+            console.log(response)
+            
+          }
+          
+        })
+
+        return  usuarios
+     }
+    })
+        
+     //return response*/
+
+    return carrito
+    
+    
+}
+
 let Cart = {
     getAll,
     getById,
-    getUserCarts
+    getUserCarts,
+    bigCarts
 }
 
 module.exports = Cart

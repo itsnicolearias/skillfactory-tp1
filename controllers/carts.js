@@ -39,6 +39,12 @@ const getUserCart = async (req, res) => {
 const getBigCarts = async (req, res) => {
     //debe devolver todos los carritos que tengan más de 2 productos 
     //y que diga el nombre del usuario que ordeno ese carrito
+    try {
+        const carts = await Cart.bigCarts()
+        res.json(carts)
+    } catch (error) {
+        throw new ErrorObject(error.message, error.statusCode || 500)
+    }
 }
 
 module.exports = { getAllCarts, getBigCarts, getCartById, getUserCart }
