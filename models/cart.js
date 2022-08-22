@@ -1,4 +1,3 @@
-const { response } = require('express')
 const User = require('./user')
 
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args))
@@ -21,29 +20,16 @@ let getUserCarts = async (userId) => {
 let bigCarts = async () => {
     const carts = await getAll()
     const users = await User.getAll()
-    const carrito =  await carts.filter((cart) => cart.products.length > 1)
-        /*if {
-       const usuarios = users.filter((user) => {
-          if (user.id === cart.userId){
-            const response = {
-              name: user.name,
-              carts: JSON.stringify(cart)
-            }
-            console.log(response)
-            
+    
+  const response = await carts.filter((cart) => {
+        if (cart.products.length > 1) {
+           const user = users.filter((user) => user.id === cart.userId)  
+           cart.user = user.name
+                return cart
           }
-          
-        })
-
-        return  usuarios
-     }
+   
     })
-        
-     //return response*/
-
-    return carrito
-    
-    
+    return response
 }
 
 let Cart = {
